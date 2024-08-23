@@ -2,12 +2,13 @@
  * The Home Page component for the BuddyFinder web applicaiton.
 */
 
-import { useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 
 //CSS styling imports go here
 import "./Home.css"
 
-//utility function imports go here
+//api and request imports go here
+import { getAllPetData } from "../services/requests/AdoptAPet";
 
 const DogSearchForm = () => {
   const [searchInput, setSearchInput] = useState<string | undefined>(undefined);
@@ -48,18 +49,102 @@ const Info = () => {
 
   return (
     <div className="info-box">
-      <p>This is a website to search for dogs to adopt. One dog adoption is one less dog on the streets!</p>
+      <p>This is a website to search for dogs to adopt. One dog adoption is one less dog off the streets!</p>
+    </div>
+  );
+}
+
+/*
+const PetsInfo: FC<PetsProp> = (props) => {
+  const { pets } = props;
+  
+  const petCards = pets.map((pet: PetInfo, i: number) => (
+    <div
+      className="pet-info-card"
+      key={pet.id}
+    >
+      <h3>{pet.name}</h3>
+    </div>
+  ));
+
+  return (
+    petCards
+  );
+}
+*/
+
+const PetCard: FC<PetInfo> = (props) => {
+  const {
+    id,
+    name,
+    gender,
+    age,
+    size,
+    primaryBreed,
+    secondaryBreed,
+    photo
+  } = props;
+  const styles = {
+    bottomContainer: {
+      background: gender === "m" ? "blue" : "red",
+      boxShadow: gender === "m" ? "4px 4px 10px blue" : "4px 4px 10px red",
+    }
+  }
+
+  return (
+    <div className="pet-card" key={id}>
+      <div className="image-container">
+        <img className="pet-image" src={photo} />
+      </div>
+      <div className="main-info-container">
+        <h2>{name}</h2>
+        <p>Gender: {gender}</p>
+        <p>Age: {age}</p>
+        <p>Breed: {primaryBreed}</p>
+      </div>
+      <div className="additional-info-container" style={styles.bottomContainer} >
+        <p>working on it</p>
+      </div>
     </div>
   );
 }
 
 const Home = () => {
+  const [petData, setPetData] = useState<PetInfo[]>([]);
+
+  const fetchPetData = useCallback( async() => {
+    const data = await getAllPetData();
+    setPetData(data as PetInfo[]);
+  }, []);
+
+  useEffect(() => {
+
+    fetchPetData();
+  }, [fetchPetData]);
 
   return (
     <>
       <h1 style={{textAlign: 'center'}}><span className="page-title">Buddy Finder</span></h1>
       <Info />
       <DogSearchForm />
+      <div className="card-container">
+        {//Map function to create info cards for each pet
+          petData.map((pet) => {
+            return (
+              <PetCard
+                id={pet.id} 
+                name={pet.name}
+                gender={pet.gender}
+                age={pet.age}
+                size={pet.size}
+                primaryBreed={pet.primaryBreed}
+                secondaryBreed={pet.secondaryBreed}
+                photo={pet.photo}
+              />
+            )
+          })
+        }
+      </div>
     </>
   );
 }
