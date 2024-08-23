@@ -35,4 +35,4 @@ def get_all_pets(request):
     #    pet_data.save()
     #    all_pets = BuddyFinder.objects.all()
     
-    return JsonResponse(data)
+    return JsonResponse(pets, safe=False)

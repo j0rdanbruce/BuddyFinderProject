@@ -2,12 +2,14 @@
  * The Home Page component for the BuddyFinder web applicaiton.
 */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //CSS styling imports go here
 import "./Home.css"
+import { AxiosResponse } from "axios";
 
-//utility function imports go here
+//api and request imports go here
+import { getAllPetData } from "../services/requests/AdoptAPet";
 
 const DogSearchForm = () => {
   const [searchInput, setSearchInput] = useState<string | undefined>(undefined);
@@ -48,18 +50,43 @@ const Info = () => {
 
   return (
     <div className="info-box">
-      <p>This is a website to search for dogs to adopt. One dog adoption is one less dog on the streets!</p>
+      <p>This is a website to search for dogs to adopt. One dog adoption is one less dog off the streets!</p>
     </div>
   );
 }
 
+const PetsInfo = (props: PetInfo[]) => {
+
+
+  return (
+    <>
+    </>
+  );
+}
+
 const Home = () => {
+  const [petData, setPetData] = useState<Promise<AxiosResponse> | undefined>(undefined);
+
+  function loadPetData() {
+    const response = getAllPetData();
+
+    return response;
+  }
+
+  useEffect(() => {
+    const petInfo = loadPetData();
+
+    setPetData(petInfo);
+  }, []);
 
   return (
     <>
       <h1 style={{textAlign: 'center'}}><span className="page-title">Buddy Finder</span></h1>
       <Info />
       <DogSearchForm />
+      <h2>
+        { petData && JSON.stringify(petData) }
+      </h2>
     </>
   );
 }
