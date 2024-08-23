@@ -13,7 +13,7 @@ class BuddyFinderView(viewsets.ModelViewSet):
     queryset = BuddyFinder.objects.all()
 
 def get_all_pets(request):
-    all_pets = {}
+    all_pets = []
     adopt_a_pet_url = "https://api-staging.adoptapet.com/search/pet_search?key=hg4nsv85lppeoqqixy3tnlt3k8lj6o0c&v=3&output=json&city_or_zip=07738&geo_range=50&species=dog&breed_id=real=801&sex=m&age=young&start_number=1&end_number=40"
     payload={}
     headers = {
@@ -25,14 +25,17 @@ def get_all_pets(request):
     pets = data['pets']
 
     #loop through all available pets
-    #for pet in pets:
-    #    pet_data = BuddyFinder(
-    #        name = pet['pet_name'],
-    #        gender = pet['sex'],
-    #        size = pet['size'],
-    #        description = 'unavailable'
-    #    )
-    #    pet_data.save()
-    #    all_pets = BuddyFinder.objects.all()
+    for pet in pets:
+        pet_data = {
+            'id': pet['pet_id'],
+            'name': pet['pet_name'],
+            'gender': pet['sex'],
+            'age': pet['age'],
+            'size': pet['size'],
+            'primary_breed': pet['primary_breed'],
+            'secondary_breed': pet['secondary_breed'],
+            'photo': pet['large_results_photo_url']
+        }
+        all_pets.append(pet_data)
     
-    return JsonResponse(pets, safe=False)
+    return JsonResponse(all_pets, safe=False)

@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 //CSS styling imports go here
 import "./Home.css"
-import { AxiosResponse } from "axios";
 
 //api and request imports go here
 import { getAllPetData } from "../services/requests/AdoptAPet";
@@ -55,17 +54,22 @@ const Info = () => {
   );
 }
 
-const PetsInfo = (props: PetInfo[]) => {
-
+const PetsInfo = (props: any) => {
+  const { pets } = props;
 
   return (
-    <>
-    </>
+    <div>
+      {pets.map((pet: any) => {
+        return (
+          <p>{pet.name}</p>
+        );
+      })}
+    </div>
   );
 }
 
 const Home = () => {
-  const [petData, setPetData] = useState<Promise<AxiosResponse> | undefined>(undefined);
+  const [petData, setPetData] = useState(undefined);
 
   function loadPetData() {
     const response = getAllPetData();
@@ -74,9 +78,9 @@ const Home = () => {
   }
 
   useEffect(() => {
-    const petInfo = loadPetData();
+    const petInfo = loadPetData() as any;
 
-    setPetData(petInfo);
+    petInfo && setPetData(petInfo);
   }, []);
 
   return (
@@ -84,9 +88,7 @@ const Home = () => {
       <h1 style={{textAlign: 'center'}}><span className="page-title">Buddy Finder</span></h1>
       <Info />
       <DogSearchForm />
-      <h2>
-        { petData && JSON.stringify(petData) }
-      </h2>
+      { petData && <PetsInfo pets={petData} /> }
     </>
   );
 }

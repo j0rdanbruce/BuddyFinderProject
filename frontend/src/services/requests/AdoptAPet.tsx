@@ -1,8 +1,29 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
+
+const convertData = (axiosData: any[]): PetInfo[] => {
+  const petData: PetInfo[] = [];
+
+
+  return petData;
+}
 
 export const getAllPetData = async () => {
-  const petUrl = "http://127.0.0.1:8000/get_all_pets/";
-  const { data } = await axios.get(petUrl);
+  const allPetData: PetInfo[] = [];
+  const baseUrl = "http://127.0.0.1:8000";
+  const petUrl = "/get_all_pets/";
+  const axiosGetPetDataConfig: AxiosRequestConfig = {
+    baseURL: baseUrl,
+    url: petUrl,
+    method: 'get',
+  };
 
-  return data;
+  try {
+    const response = await axios(axiosGetPetDataConfig);
+    const { data } = response;
+    console.log(data);
+    return data;
+    
+  } catch (error) {
+    console.log(error);
+  }
 }
