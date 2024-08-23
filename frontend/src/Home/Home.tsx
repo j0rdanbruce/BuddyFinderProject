@@ -73,11 +73,38 @@ const PetsInfo: FC<PetsProp> = (props) => {
 }
 */
 
-const PetInfoContainer = () => {
+const PetCard: FC<PetInfo> = (props) => {
+  const {
+    id,
+    name,
+    gender,
+    age,
+    size,
+    primaryBreed,
+    secondaryBreed,
+    photo
+  } = props;
+  const styles = {
+    bottomContainer: {
+      background: gender === "m" ? "blue" : "red",
+      boxShadow: gender === "m" ? "4px 4px 10px blue" : "4px 4px 10px red",
+    }
+  }
 
   return (
-    <div className="pet-info-container">
-      
+    <div className="pet-card" key={id}>
+      <div className="image-container">
+        <img className="pet-image" src={photo} />
+      </div>
+      <div className="main-info-container">
+        <h2>{name}</h2>
+        <p>Gender: {gender}</p>
+        <p>Age: {age}</p>
+        <p>Breed: {primaryBreed}</p>
+      </div>
+      <div className="additional-info-container" style={styles.bottomContainer} >
+        <p>working on it</p>
+      </div>
     </div>
   );
 }
@@ -100,22 +127,24 @@ const Home = () => {
       <h1 style={{textAlign: 'center'}}><span className="page-title">Buddy Finder</span></h1>
       <Info />
       <DogSearchForm />
-      {
-        petData.map((pet) => {
-          return (
-            <div className="pet-card" key={pet.id} >
-              <h3>{pet.name}</h3>
-              <ul>
-                <li>{pet.gender}</li>
-                <li>{pet.age}</li>
-                <li>{pet.primaryBreed}</li>
-                <li>{pet.secondaryBreed}</li>
-                <li><img src={pet.photo} /></li>
-              </ul>
-            </div>
-          )
-        })
-      }
+      <div className="card-container">
+        {//Map function to create info cards for each pet
+          petData.map((pet) => {
+            return (
+              <PetCard
+                id={pet.id} 
+                name={pet.name}
+                gender={pet.gender}
+                age={pet.age}
+                size={pet.size}
+                primaryBreed={pet.primaryBreed}
+                secondaryBreed={pet.secondaryBreed}
+                photo={pet.photo}
+              />
+            )
+          })
+        }
+      </div>
     </>
   );
 }
