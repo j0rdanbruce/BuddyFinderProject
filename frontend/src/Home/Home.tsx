@@ -2,7 +2,7 @@
  * The Home Page component for the BuddyFinder web applicaiton.
 */
 
-import { useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 
 //CSS styling imports go here
 import "./Home.css"
@@ -54,41 +54,68 @@ const Info = () => {
   );
 }
 
-const PetsInfo = (props: any) => {
+/*
+const PetsInfo: FC<PetsProp> = (props) => {
   const { pets } = props;
+  
+  const petCards = pets.map((pet: PetInfo, i: number) => (
+    <div
+      className="pet-info-card"
+      key={pet.id}
+    >
+      <h3>{pet.name}</h3>
+    </div>
+  ));
 
   return (
-    <div>
-      {pets.map((pet: any) => {
-        return (
-          <p>{pet.name}</p>
-        );
-      })}
+    petCards
+  );
+}
+*/
+
+const PetInfoContainer = () => {
+
+  return (
+    <div className="pet-info-container">
+      
     </div>
   );
 }
 
 const Home = () => {
-  const [petData, setPetData] = useState(undefined);
+  const [petData, setPetData] = useState<PetInfo[]>([]);
 
-  function loadPetData() {
-    const response = getAllPetData();
-
-    return response;
-  }
+  const fetchPetData = useCallback( async() => {
+    const data = await getAllPetData();
+    setPetData(data as PetInfo[]);
+  }, []);
 
   useEffect(() => {
-    const petInfo = loadPetData() as any;
 
-    petInfo && setPetData(petInfo);
-  }, []);
+    fetchPetData();
+  }, [fetchPetData]);
 
   return (
     <>
       <h1 style={{textAlign: 'center'}}><span className="page-title">Buddy Finder</span></h1>
       <Info />
       <DogSearchForm />
-      { petData && <PetsInfo pets={petData} /> }
+      {
+        petData.map((pet) => {
+          return (
+            <div className="pet-card" key={pet.id} >
+              <h3>{pet.name}</h3>
+              <ul>
+                <li>{pet.gender}</li>
+                <li>{pet.age}</li>
+                <li>{pet.primaryBreed}</li>
+                <li>{pet.secondaryBreed}</li>
+                <li><img src={pet.photo} /></li>
+              </ul>
+            </div>
+          )
+        })
+      }
     </>
   );
 }
