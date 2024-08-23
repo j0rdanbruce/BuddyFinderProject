@@ -27,3 +27,11 @@ declare interface PetProp {
     secondaryBreed?: string,
     photo: string,
 }
+
+declare type AdvancedSearch = {
+    species?: string,
+    gender?: string,
+    zipcode?: string,
+    miles?: string,
+    results?: string
+}

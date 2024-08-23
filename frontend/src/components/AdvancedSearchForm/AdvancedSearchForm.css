@@ -6,5 +6,69 @@
     margin-left: auto;
     height: 300px;
     width: 80%;
+    padding: 10px;
+    border-radius: 10px;
     border: solid brown 2px;
+}
+
+.species input {
+    width: 250px;
+    height: 30px;
+    border-radius: 5px;
+    background: rgb(230, 230, 230);
+    text-align: center;
+}
+
+.zipcode input {
+    width: 250px;
+    height: 30px;
+    border-radius: 5px;
+    background: rgb(230, 230, 230);
+    text-align: center;
+}
+
+.miles select {
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    background: rgb(230, 230, 230);
+    text-align: center;
+}
+
+.total-results select {
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    background: rgb(230, 230, 230);
+    text-align: center;
+}
+
+.btn-container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+}
+
+.cancel-btn {
+    height: 35px;
+    width: 80px;
+    margin: 2.5px;
+    border-radius: 5px;
+    border: none;
+}
+.cancel-btn:hover {
+    cursor: pointer;
+}
+
+.apply-btn {
+    height: 35px;
+    width: 80px;
+    margin: 2.5px;
+    border-radius: 5px;
+    border: none;
+    background: blue;
+}
+.apply-btn:hover {
+    cursor: pointer;
 }
