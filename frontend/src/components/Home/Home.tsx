@@ -7,8 +7,11 @@ import { FC, useCallback, useEffect, useState } from "react";
 //CSS styling imports go here
 import "./Home.css"
 
+//component imports go here
+import AdvancedSearchForm from "../AdvancedSearchForm/AdvancedSearchForm";
+
 //api and request imports go here
-import { getAllPetData } from "../services/requests/AdoptAPet";
+import { getAllPetData } from "../../services/requests/AdoptAPet";
 
 const DogSearchForm = () => {
   const [searchInput, setSearchInput] = useState<string | undefined>(undefined);
@@ -53,25 +56,6 @@ const Info = () => {
     </div>
   );
 }
-
-/*
-const PetsInfo: FC<PetsProp> = (props) => {
-  const { pets } = props;
-  
-  const petCards = pets.map((pet: PetInfo, i: number) => (
-    <div
-      className="pet-info-card"
-      key={pet.id}
-    >
-      <h3>{pet.name}</h3>
-    </div>
-  ));
-
-  return (
-    petCards
-  );
-}
-*/
 
 const PetCard: FC<PetInfo> = (props) => {
   const {
@@ -127,6 +111,7 @@ const Home = () => {
       <h1 style={{textAlign: 'center'}}><span className="page-title">Buddy Finder</span></h1>
       <Info />
       <DogSearchForm />
+      <AdvancedSearchForm />
       <div className="card-container">
         {//Map function to create info cards for each pet
           petData.map((pet) => {

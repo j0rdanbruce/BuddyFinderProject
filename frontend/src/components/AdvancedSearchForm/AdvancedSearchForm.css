@@ -1,0 +1,10 @@
+
+
+.search-form {
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    height: 300px;
+    width: 80%;
+    border: solid brown 2px;
+}
