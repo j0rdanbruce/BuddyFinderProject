@@ -21,16 +21,14 @@ export const getAllPetData = async () => {
   }
 }
 
-export const getAdvancedSearch = async () => {
+export const getAdvancedSearch = async (searchParams: AdvancedSearch) => {
   const baseUrl = "http://127.0.0.1:8000";
   const petUrl = "/get_advanced_search/";
   const axiosGetPetDataConfig: AxiosRequestConfig = {
     baseURL: baseUrl,
     url: petUrl,
     method: 'get',
-    params: {
-      
-    }
+    params: searchParams
   };
 
   try {

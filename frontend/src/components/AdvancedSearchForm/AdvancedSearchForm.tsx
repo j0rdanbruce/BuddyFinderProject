@@ -8,6 +8,10 @@ import { useState } from "react";
 //CSS imports go here
 import "./AdvancedSearchForm.css";
 
+//api and request imports go here
+import { getAdvancedSearch } from "../../services/requests/AdoptAPet";
+
+
 const AdvancedSearchForm = () => {
   const [searchDetails, setSearchDetails] = useState<AdvancedSearch>({
     species: undefined,
@@ -19,7 +23,7 @@ const AdvancedSearchForm = () => {
 
 
   function handleAdvancedSearch() {
-
+    
   }
 
   function handleCancelBtnClick() {
@@ -41,33 +45,33 @@ const AdvancedSearchForm = () => {
                               ...searchDetails,
                               species: event.target.value
                             })
-                          }} />
+                          }}/>
       </label>
     </div>
     <div className="gender-btn">
       <label>
-        <input type="radio" name="radio-btn" value="m" /> Male
+        <input type="radio" name="radio-btn" value="m" onChange={(event) => {setSearchDetails({...searchDetails, gender: event.target.value})}} /> Male
       </label>
     </div>
     <div className="gender-btn">
       <label>
-        <input type="radio" name="radio-btn" value="f" /> Female
+        <input type="radio" name="radio-btn" value="f" onChange={(event) => {setSearchDetails({...searchDetails, gender: event.target.value})}} /> Female
       </label>
     </div>
     <div className="gender-btn">
       <label>
-        <input type="radio" name="radio-btn" value="both" /> Both
+        <input type="radio" name="radio-btn" value="both" onChange={(event) => {setSearchDetails({...searchDetails, gender: event.target.value})}} /> Both
       </label>
     </div>
     <div className="zipcode">
       <label>
-        Location Origin: <input type="text" name="zipcode" placeholder="Zipcode" />
+        Location Origin: <input type="text" name="zipcode" placeholder="Zipcode" onChange={(event) => {setSearchDetails({...searchDetails, zipcode: event.target.value})}} />
       </label>
     </div>
     <div className="miles">
       <label>
         Maximum Distance: 
-        <select>
+        <select value={searchDetails.miles} onChange={(event) => {setSearchDetails({...searchDetails, miles: event.target.value})}} >
           <option value={5}>5</option>
           <option value={10}>10</option>
           <option value={15}>15</option>
@@ -82,7 +86,7 @@ const AdvancedSearchForm = () => {
     <div className="total-results">
       <label>
         Number of Results: 
-        <select>
+        <select value={searchDetails.results} onChange={(event) => {setSearchDetails({...searchDetails, results: Number(event.target.value)})}}>
           <option value={10}>10</option>
           <option value={20}>20</option>
           <option value={30}>30</option>

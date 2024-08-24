@@ -39,3 +39,27 @@ def get_all_pets(request):
         all_pets.append(pet_data)
     
     return JsonResponse(all_pets, safe=False)
+
+def get_advanced_search(request):
+    all_pets = []
+    adopt_a_pet_url = "https://api-staging.adoptapet.com/search/pet_search"
+    payload={
+        "key": "hg4nsv85lppeoqqixy3tnlt3k8lj6o0c",
+        "v": "3",
+        "output": "json",
+        "city_or_zip": "pass",
+        "geo_range": "pass",
+        "species": "pass",
+        "sex": "pass",
+        "start_number": "1",
+        "end_number": "pass"
+    }
+    headers = {
+        'Accept': 'application/json; charset=UTF8'
+    }
+    response = requests.request("GET", adopt_a_pet_url, headers=headers, data=payload)
+    data = response.json()
+    #print(data)
+    pets = data['pets']
+
+    return JsonResponse(all_pets, safe=False)

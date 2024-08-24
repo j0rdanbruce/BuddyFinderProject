@@ -32,6 +32,6 @@ declare type AdvancedSearch = {
     species?: string,
     gender?: string,
     zipcode?: string,
-    miles?: string,
-    results?: string
+    miles?: string | number,
+    results?: number
 }

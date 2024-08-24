@@ -78,7 +78,7 @@ const PetCard: FC<PetInfo> = (props) => {
   return (
     <div className="pet-card" key={id}>
       <div className="image-container">
-        <img className="pet-image" src={photo} />
+        <img className="pet-image" src={photo} alt="" />
       </div>
       <div className="main-info-container">
         <h2>{name}</h2>
