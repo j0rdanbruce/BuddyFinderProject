@@ -13,6 +13,7 @@ import { getAdvancedSearch } from "../../services/requests/AdoptAPet";
 
 
 const AdvancedSearchForm = () => {
+  const [petData, setPetData] = useState<PetInfo[]>([]);
   const [searchDetails, setSearchDetails] = useState<AdvancedSearch>({
     species: undefined,
     gender: undefined,
@@ -23,7 +24,7 @@ const AdvancedSearchForm = () => {
 
 
   function handleAdvancedSearch() {
-    
+    const response = getAdvancedSearch(searchDetails);
   }
 
   function handleCancelBtnClick() {
@@ -50,17 +51,17 @@ const AdvancedSearchForm = () => {
     </div>
     <div className="gender-btn">
       <label>
-        <input type="radio" name="radio-btn" value="m" onChange={(event) => {setSearchDetails({...searchDetails, gender: event.target.value})}} /> Male
+        <input type="radio" name="sex" value="m" onChange={(event) => {setSearchDetails({...searchDetails, gender: event.target.value})}} /> Male
       </label>
     </div>
     <div className="gender-btn">
       <label>
-        <input type="radio" name="radio-btn" value="f" onChange={(event) => {setSearchDetails({...searchDetails, gender: event.target.value})}} /> Female
+        <input type="radio" name="sex" value="f" onChange={(event) => {setSearchDetails({...searchDetails, gender: event.target.value})}} /> Female
       </label>
     </div>
     <div className="gender-btn">
       <label>
-        <input type="radio" name="radio-btn" value="both" onChange={(event) => {setSearchDetails({...searchDetails, gender: event.target.value})}} /> Both
+        <input type="radio" name="sex" value="both" onChange={(event) => {setSearchDetails({...searchDetails, gender: event.target.value})}} /> Both
       </label>
     </div>
     <div className="zipcode">

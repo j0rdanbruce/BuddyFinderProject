@@ -32,8 +32,8 @@ def get_all_pets(request):
             'gender': pet['sex'],
             'age': pet['age'],
             'size': pet['size'],
-            'primary_breed': pet['primary_breed'],
-            'secondary_breed': pet['secondary_breed'],
+            'primarBreed': pet['primary_breed'],
+            'secondaryBreed': pet['secondary_breed'],
             'photo': pet['large_results_photo_url']
         }
         all_pets.append(pet_data)
@@ -41,25 +41,43 @@ def get_all_pets(request):
     return JsonResponse(all_pets, safe=False)
 
 def get_advanced_search(request):
+    print(request.GET)
+    #print(request.GET['species'])
     all_pets = []
     adopt_a_pet_url = "https://api-staging.adoptapet.com/search/pet_search"
-    payload={
+    params={
         "key": "hg4nsv85lppeoqqixy3tnlt3k8lj6o0c",
         "v": "3",
         "output": "json",
-        "city_or_zip": "pass",
-        "geo_range": "pass",
-        "species": "pass",
-        "sex": "pass",
+        "city_or_zip": request.GET['zipcode'],
+        "geo_range": request.GET['miles'],
+        "species": request.GET['species'],
+        "sex": request.GET['gender'],
         "start_number": "1",
-        "end_number": "pass"
+        "end_number": request.GET['results']
     }
     headers = {
         'Accept': 'application/json; charset=UTF8'
     }
-    response = requests.request("GET", adopt_a_pet_url, headers=headers, data=payload)
+    response = requests.request("GET", adopt_a_pet_url, headers=headers, params=params)
     data = response.json()
     #print(data)
     pets = data['pets']
 
+    #loop through all available pets
+    for pet in pets:
+        pet_data = {
+            'id': pet['pet_id'],
+            'name': pet['pet_name'],
+            'gender': pet['sex'],
+            'age': pet['age'],
+            'size': pet['size'],
+            'primaryBreed': pet['primary_breed'],
+            'secondaryBreed': pet['secondary_breed'],
+            'photo': pet['large_results_photo_url']
+        }
+        all_pets.append(pet_data)
+
+    print(all_pets)
+    
     return JsonResponse(all_pets, safe=False)

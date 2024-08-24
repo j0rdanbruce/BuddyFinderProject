@@ -26,5 +26,6 @@ from buddy_finder import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('find/', include(router.urls)),
-    path('get_all_pets/', views.get_all_pets)
+    path('get_all_pets/', views.get_all_pets),
+    path('get_advanced_search/', views.get_advanced_search),
 ]
